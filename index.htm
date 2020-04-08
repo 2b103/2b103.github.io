@@ -9,10 +9,10 @@
 
     <link rel="stylesheet" href="bootstrap.min.css">
     <style type="text/css">
-      h2 > a:first-of-type {
+      h2 > b > a:first-of-type {
         float: left;
       }
-      h2 > a:last-of-type {
+      h2 > b > a:last-of-type {
         float: right;
       }
       div[title] > input[type='checkbox'] {
@@ -258,7 +258,7 @@ addEventListener('DOMContentLoaded', function () {
   for (var i = 0; i < els.length; ++i) {
     var el = els[i];
     var h2 = document.createElement('h2');
-    h2.innerHTML = '<a class="text-warning" href="#"><b>⬆</b></a><a class="text-warning" href="#"><b>⬇</b></a>' + new Date(el.id).toLocaleDateString('ru-RU', dateOptions).replace(' г.', '');
+    h2.innerHTML = '<b class="text-warning"><a href="#">⬆</a><a href="#">⬇</a></b>' + new Date(el.id).toLocaleDateString('ru-RU', dateOptions).replace(' г.', '');
     h2.className = 'bg-success text-white text-center sticky-top';
     el.insertBefore(h2, el.firstChild);
   }
@@ -313,7 +313,7 @@ addEventListener('click', function (e) {
   if (e.target.tagName === 'A') {
     e.stopPropagation();
     e.preventDefault();
-    var block = e.target.parentNode.parentNode;
+    var block = e.target.parentNode.parentNode.parentNode;
     var el = e.target.previousSibling ? block.nextElementSibling : block.previousElementSibling;
     if (el) {
         el.scrollIntoView({behavior: 'smooth', block: 'start', inline: 'start'});

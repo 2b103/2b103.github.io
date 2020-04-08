@@ -17,7 +17,9 @@
       }
       div[title] > input[type='checkbox'] {
         float: left;
-        margin: .8em .5em 0 .3em;
+        width: 1rem;
+        height: 1rem;
+        margin: 0.7rem 0.35rem 0 0;
       }
       div[title] > input:checked ~ p {
         display: none;
@@ -42,11 +44,24 @@
         content: '(нет данных)';
         color: #999;
       }
+      .update {
+        display: none;
+      }
+      .fixed-top {
+        opacity: .9;
+      }
     </style>
   </head>
   <body class="bg-dark text-light">
   
 <div class="container">
+
+<div class="update">
+  <div class="fixed-top alert alert-warning nav nav-fill p-1">
+    <span class="nav-item nav-link">Страница устарела</span>
+    <a class="nav-item btn btn-success" href="#" onclick="location.reload();return false">Обновить</a>
+  </div>
+</div>
 
 <h1>Расписание уроков 2«Б»</h1>
 <p class="lead">Сознано на основе официальных данных, опубликованных в dnevnik.ru.</p>
@@ -237,7 +252,7 @@
 </div>
 
 <script type="text/javascript">//<![CDATA[
-window.addEventListener('DOMContentLoaded', function () {
+addEventListener('DOMContentLoaded', function () {
   var els = document.querySelectorAll('div[id]');
   var dateOptions = {weekday: 'short', year: 'numeric', month: 'long', day: 'numeric'};
   for (var i = 0; i < els.length; ++i) {
@@ -279,7 +294,7 @@ window.addEventListener('DOMContentLoaded', function () {
   }
 });
 
-window.addEventListener('load', function () {
+addEventListener('load', function () {
   setTimeout(function(){
     var firstDate = new Date('2020-04-06');
     var date = new Date();
@@ -287,7 +302,6 @@ window.addEventListener('load', function () {
       var el = document.getElementById(date.toJSON().substring(0,10));
       if (el) {
           el.scrollIntoView({behavior: 'smooth', block: 'start', inline: 'start'});
-          //location.hash = el.id;
           break;
       }
       date.setDate(date.getDate()-1);
@@ -295,7 +309,7 @@ window.addEventListener('load', function () {
   });
 });
 
-window.addEventListener('click', function(e) {
+addEventListener('click', function (e) {
   if (e.target.tagName === 'A') {
     e.stopPropagation();
     e.preventDefault();
@@ -306,6 +320,21 @@ window.addEventListener('click', function(e) {
     }
   }
 });
+
+var timerId = setInterval(function () {
+  var xhr = new XMLHttpRequest();
+  xhr.addEventListener('load', checkVersion);
+  xhr.open('GET', 'version.txt');
+  xhr.send();
+}, 5*60*1000);
+var version = '1';
+function checkVersion() {
+  console.log(this);
+  if (this.responseText !== version) {
+    document.getElementsByClassName('update')[0].className = '';
+    clearInterval(timerId);
+  }
+}
 //]]></script>
 
   </body>

@@ -307,8 +307,8 @@ addEventListener('DOMContentLoaded', function () {
   for (var i = 0; i < els.length; ++i) {
     var el = els[i];
     var h2 = document.createElement('h2');
-    h2.innerHTML = '<b class="text-warning"><a href="#">⬆</a><a href="#">⬇</a></b>' + new Date(el.id).toLocaleDateString('ru-RU', dateOptions).replace(' г.', '');
-    h2.className = 'bg-success text-white text-center sticky-top';
+    h2.innerHTML = '<b><a class="text-warning" href="#">⬆</a><a class="text-warning" href="#">⬇</a></b>' + new Date(el.id).toLocaleDateString('ru-RU', dateOptions).replace(' г.', '');
+    h2.className = 'h3 my-0 mx-n3 bg-success text-white text-center sticky-top';
     el.insertBefore(h2, el.firstChild);
   }
 
@@ -343,6 +343,9 @@ addEventListener('DOMContentLoaded', function () {
   }
 });
 
+
+var smoothScrollOptions = ('scrollBehavior' in document.documentElement.style) ? {behavior: 'smooth', block: 'start', inline: 'start'} : true;
+
 addEventListener('load', function () {
   setTimeout(function(){
     var firstDate = new Date('2020-04-06');
@@ -350,7 +353,7 @@ addEventListener('load', function () {
     while (date >= firstDate) {
       var el = document.getElementById(date.toJSON().substring(0,10));
       if (el) {
-          el.scrollIntoView({behavior: 'smooth', block: 'start', inline: 'start'});
+          el.scrollIntoView(smoothScrollOptions);
           break;
       }
       date.setDate(date.getDate()-1);
@@ -365,12 +368,14 @@ addEventListener('click', function (e) {
     var block = e.target.parentNode.parentNode.parentNode;
     var el = e.target.previousSibling ? block.nextElementSibling : block.previousElementSibling;
     if (el) {
-        el.scrollIntoView({behavior: 'smooth', block: 'start', inline: 'start'});
+        el.scrollIntoView(smoothScrollOptions);
     }
   }
 });
 
+
 var version = '2';
+
 var timerId = setInterval(function () {
   var xhr = new XMLHttpRequest();
   xhr.addEventListener('load', checkVersion);

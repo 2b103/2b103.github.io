@@ -291,7 +291,7 @@
     <p>Учебник с.96-97 пересказ, Смотри сайт Я класс.
   </div>
   <div title="Технология">
-    <p>
+    <p>Сделать на альбомном листе коллекцию тканей с подписями внизу.
     <p>Что такое натуральные ткани? Каковы их свойства?
   </div>
 </div>
@@ -310,6 +310,11 @@ addEventListener('DOMContentLoaded', function () {
     h2.innerHTML = '<b><a class="text-warning" href="#">⬆</a><a class="text-warning" href="#">⬇</a></b>' + new Date(el.id).toLocaleDateString('ru-RU', dateOptions).replace(' г.', '');
     h2.className = 'h3 my-0 mx-n3 bg-success text-white text-center sticky-top';
     el.insertBefore(h2, el.firstChild);
+  }
+
+  var els = document.getElementsByTagName('p');
+  for (var i = 0; i < els.length; ++i) {
+    els[i].innerHTML = els[i].innerHTML.trim();
   }
 
   var els = document.querySelectorAll('div[title]');
@@ -374,7 +379,7 @@ addEventListener('click', function (e) {
 });
 
 
-var version = '2';
+var version = '3';
 
 var timerId = setInterval(function () {
   var xhr = new XMLHttpRequest();

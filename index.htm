@@ -397,8 +397,11 @@ addEventListener('click', function (e) {
 
 var version = '5';
 var doChecks = true;
+var iThrottle = 0;
 function checkUpdates() {
-  if (doChecks) {
+  if (!doChecks) return;
+  --iThrottle;
+  if (iThrottle < 0) {
     var xhr = new XMLHttpRequest();
     xhr.addEventListener('load', function () {
       if (this.responseText !== version) {
@@ -408,10 +411,14 @@ function checkUpdates() {
     });
     xhr.open('GET', 'version.txt');
     xhr.send();
-    setTimeout(checkUpdates, 5*60*1000);
+    iThrottle = 5*60;
   }
-}
+  setTimeout(checkUpdates, 1000);
+};
 setTimeout(checkUpdates, 1000);
+addEventListener('pageshow', function () {
+  iThrottle = 0;
+});
 
 //]]></script>
 

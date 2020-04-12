@@ -505,7 +505,7 @@ addEventListener('click', function (e) {
 });
 
 
-var version = '7';
+var version = 7;
 var doChecks = true;
 var iThrottle = 0;
 function checkUpdates() {
@@ -514,7 +514,7 @@ function checkUpdates() {
   if (iThrottle < 0) {
     var xhr = new XMLHttpRequest();
     xhr.addEventListener('load', function () {
-      if (this.responseText !== version) {
+      if (version < parseInt(this.responseText, 10)) {
         document.getElementsByClassName('update')[0].className = '';
         doChecks = false;
       }
